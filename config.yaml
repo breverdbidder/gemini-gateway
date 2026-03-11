@@ -1,0 +1,12 @@
+host: "0.0.0.0"
+port: 8317
+auth-dir: "/data/gemini-gateway/auths"
+api-keys:
+  - "sk-gemini-gw-biddeed-2026"
+debug: false
+request-retry: 3
+routing:
+  strategy: "round-robin"
+quota-exceeded:
+  switch-project: true
+  switch-preview-model: true

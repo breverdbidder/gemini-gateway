@@ -1,47 +1,45 @@
-# Gemini Gateway — CLAUDE.md
+# CLAUDE.md — BidDeed.AI / Everest Capital USA
 
-## Identity
-Gemini-only fork of CLIProxyAPI. OpenAI-compatible API for Gemini 2.5 Pro via OAuth.
-No Claude/Codex/Qwen. No cloaking. No TLS spoofing.
+## Who I Am
+Ariel Shapira. Solo founder of BidDeed.AI and Everest Capital USA. 10+ years foreclosure investing in Brevard County, Florida. Licensed FL broker and general contractor. Building an AI-powered foreclosure auction intelligence platform. ADHD — I need systems that run themselves.
 
-## Stack
-Go 1.24+, Gin, Alpine Docker. Deploy: Hetzner. Feeds into LiteLLM on Render.
+## My Stack
+- **Repos:** github.com/breverdbidder/* (cli-anything-biddeed, zonewise-scraper-v4, biddeed-ai, biddeed-ai-ui, zonewise-web, cliproxy-gateway, tax-insurance-optimizer)
+- **Database:** Supabase (mocerqjnksmhcjzxrewo.supabase.co) — multi_county_auctions (245K rows), activities, insights, daily_metrics
+- **Compute:** Hetzner everest-dispatch (87.99.129.125) with CLIProxyAPI on 127.0.0.1:8317
+- **AI:** Gemini Flash (FREE via CLIProxyAPI), DeepSeek V3.2 ($0.28/1M), Claude (Max plan, never API)
+- **Deploy:** GitHub Actions + Cloudflare Pages + Render
+- **Brand:** Navy #1E3A5F, Orange #F59E0B, Inter font, bg #020617
 
-## Critical Rules
-- NEVER add Claude/Codex/Qwen auth back
-- NEVER add TLS fingerprint spoofing (utls)
-- NEVER add cloaking, fake user IDs, or zero-width obfuscation
-- Gemini-only, clean, simple
+## Context Rules
 
-## Current State: SURGERY COMPLETE — COMPILATION FIX NEEDED
-Non-Gemini modules deleted. Code does NOT compile yet.
-Your job: go build ./..., fix errors iteratively, commit when clean.
+When I mention an auction or property → query Supabase `multi_county_auctions` first
+When I mention a case number → search `multi_county_auctions` by case_number field
+When analyzing a deal → apply max bid formula: (ARV×70%)-Repairs-$10K-MIN($25K,15%×ARV)
+When I ask about pipeline health → check `daily_metrics` and recent GitHub Action runs
+When I mention a county → check if config exists in `counties/` before assuming anything
+When something needs building → follow cli-anything HARNESS.md 7-phase pattern
+When deploying code → push to GitHub, never local installs or Google Drive
+When spending money → stop and confirm if >$10/session
+When I context-switch mid-task → flag it: "📌 [previous task] is still open"
+When I say "Summit" → execute immediately, no questions, no clarification
 
-## Key Files Modified
-- sdk/cliproxy/service.go — stripped non-Gemini executor registrations
-- internal/config/config.go — still has CloakConfig struct (remove it)
-- internal/watcher/diff/config_diff.go — still has cloak diff logic (remove it)
+## How I Work
+- Direct, no softening language. Facts and actions.
+- Cost discipline: $10/session max. Batch operations. One attempt per approach.
+- Zero HITL: try 3 alternatives before surfacing a blocker.
+- Execute first, report results. Don't ask what to do.
+- Push back with strong opinions when you disagree.
+- Wrong = "I was wrong." Never invent numbers.
 
-## What Was Stripped
-- internal/auth/{claude,codex,antigravity,iflow,qwen,kimi,vertex}
-- internal/runtime/executor/{claude,codex,cloak,antigravity,iflow,kimi,qwen,aistudio}
-- internal/translator/{claude,codex,antigravity}
-- internal/api/modules/amp
+## Slash Commands
+- `/auction-brief` — morning auction briefing from Supabase
+- `/county-setup` — onboard a new Florida county
+- `/deal-intel` — process foreclosure documents into structured data
+- `/tldr` — end-of-session summary, updates memory.md
+- `/transcript` — YouTube video analysis via Hetzner pipeline
 
-## What Stays
-- internal/auth/gemini/ (492 lines — OAuth)
-- internal/runtime/executor/gemini_*.go
-- internal/translator/gemini*/ + openai/gemini*/
-- All infrastructure: config, api, registry, store, thinking, cache, util
-
-## Credentials
-All secrets are in GitHub Actions secrets. Never hardcode.
-See .env.example for required environment variables.
-
-## Compilation Fix Strategy
-1. go build ./... 2>&1 | head -50
-2. Fix broken imports (remove lines referencing deleted packages)
-3. Fix undefined type/func refs (remove or stub switch cases)
-4. Repeat until clean
-5. go test ./... -short
-6. Commit and push
+## Family Context (when relevant)
+- Wife Mariam: runs Property360 real estate, Protection Partners insurance, contracting
+- Son Michael (16): D1 competitive swimmer, Satellite Beach HS, keto diet, Shabbat observance
+- Orthodox practices: Shabbat (no work Fri sunset–Sat havdalah), kosher, holidays
